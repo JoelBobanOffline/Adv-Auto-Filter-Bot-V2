@@ -21,8 +21,7 @@ async def auto_filter(bot, update):
     A Funtion To Handle Incoming Text And Reply With Appropriate Results
     """
     group_id = update.chat.id
-    if not configs.get('autofilter', True): 
-        return
+    
 
     if re.findall(r"((^\/|^,|^\.|^[\U0001F600-\U000E007F]).*)", update.text):
         return
@@ -44,6 +43,9 @@ async def auto_filter(bot, update):
     achats = ACTIVE_CHATS[str(group_id)] if ACTIVE_CHATS.get(str(group_id)) else await db.find_active(group_id)
     ACTIVE_CHATS[str(group_id)] = achats
     
+    if not configs.get('autofilter', True): 
+        return
+
     if not configs:
         return
     
